@@ -244,8 +244,8 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
                             type="range"
                             className="form-range mr-2"
                             min={0}
-                            max={100}
-                            step={1}
+                            max={100000}
+                            step={100}
                             value={priceRange[0]}
                             onChange={(e) => handlePriceRangeChange([parseInt(e.target.value, 10), priceRange[1]])}
                         />
@@ -256,8 +256,8 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
                             type="range"
                             className="form-range mr-2"
                             min={0}
-                            max={100}
-                            step={1}
+                            max={100000}
+                            step={100}
                             value={priceRange[1]}
                             onChange={(e) => handlePriceRangeChange([priceRange[0], parseInt(e.target.value, 10)])}
                         />

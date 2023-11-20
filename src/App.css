@@ -26,10 +26,10 @@
 }
 
 .contentjombo{
-  position: absolute;
+  position: relative;
   top: 100px;
   left: 20px;
-  z-index: 1;
+  /* z-index: 1; */
   opacity: 100% !important;
   color: #000000;
   font-size: xx-large ;

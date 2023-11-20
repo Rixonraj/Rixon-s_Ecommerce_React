@@ -37,7 +37,7 @@ const ProductList = () => {
             <div className="card-body shadow">
               <h5 className="card-title">{product.name}</h5>
 
-              <p className="card-text">Price: ${product.price}</p>
+              <p className="card-text">Price: ₹{product.price}</p>
 
               <AdminEditProduct item={product}></AdminEditProduct>
             </div>

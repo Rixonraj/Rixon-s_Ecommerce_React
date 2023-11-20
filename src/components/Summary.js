@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Summary = ({ cartItems, setCartItems, checkoutDetails }) => {
+  const navigate = useNavigate();
   const [isPlacingOrder, setPlacingOrder] = useState(false);
   console.log("cartItems", cartItems)
   console.log("cartItems", checkoutDetails)
@@ -30,18 +31,19 @@ const Summary = ({ cartItems, setCartItems, checkoutDetails }) => {
       overallSubtotal,
       orderStatus: "placed",
       checkoutDetails: checkoutDetails,
-      userId : sessionStorage.getItem("userid")
+      userId: sessionStorage.getItem("userid")
     };
 
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKENDURL}/placeOrder`, requestBody, {
         headers: {
-          'Authorization': token, 
-          'User-Id': userId, 
+          'Authorization': token,
+          'User-Id': userId,
         }
       });
       setCartItems([])
       alert("Order placed successfully")
+      navigate('/orders')
       console.log('Order placed successfully:', response.data);
     } catch (error) {
       console.error('Error placing order:', error.message);
@@ -78,14 +80,14 @@ const Summary = ({ cartItems, setCartItems, checkoutDetails }) => {
                   <div className="d-flex">
                     <img src={`${process.env.REACT_APP_BACKENDURL}/files/${item.fileName}`} alt={item.name} className="mr-3" style={{ maxWidth: '50px' }} />
                     <div>
-                      {item.name} - ${item.price} each
+                      {item.name} -  ₹{item.price} each
                     </div>
                   </div>
                   <div>
                     Quantity: {item.quantity}
                   </div>
                   <div>
-                    Total: ${(item.price * item.quantity).toFixed(2)}
+                    Total:  ₹{(item.price * item.quantity).toFixed(2)}
                   </div>
                 </li>
               ))}
