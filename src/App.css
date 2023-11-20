@@ -1,38 +1,305 @@
-.App {
+.selectedProfile{
+  color: #1192a5;
+  font-weight: bolder;
+}
+
+.jumbotronStyle{
+  position: relative;
+  height:100vh;
+  background-image: url('./assets/wallpaper1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 70%;
+}
+.jumbotronStyle::before{
+  position: absolute;
+  height:100%;
+  top: 15;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.contentjombo{
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  z-index: 1;
+  opacity: 100% !important;
+  color: #000000;
+  font-size: xx-large ;
   text-align: center;
 }
+/* //Modal */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.popupcard {
+
+  background: white;
+  width: 90%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  /* margin-top: auto !important;
+  margin-bottom: auto !important; */
+  /* display: flex; */
+  /* justify-content: flex-end; */
+  /* margin-right: 10px; */
+  top: 50px;
+  position: absolute !important;
+
+}
+.popupcard1{
+  top: 30px!important;
+}
+.popupClose {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+  width: fit-content;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.modal-open {
+  /* overflow: hidden !important; */
+}
+
+.modal-open .modal {
+  overflow-x: hidden !important;
+  /* overflow-y:  hidden !important; */
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* overflow:  hidden !important; */
+  outline: 0;
+  background: rgba(0, 0, 0, .5);
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: .5rem;
+  pointer-events: none
+}
+
+.modal.fade .modal-dialog {
+  transition: transform .3s ease-out;
+  transform: translate(0, -50px)
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .modal.fade .modal-dialog {
+      transition: none
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.modal.show .modal-dialog {
+  transform: none
+}
+
+.modal.modal-static .modal-dialog {
+  transform: scale(1.02)
+}
+
+.modal-dialog-scrollable {
+  display: flex;
+  max-height: calc(100% - 1rem)
+}
+
+.modal-dialog-scrollable .modal-content {
+  max-height: calc(100vh - 1rem);
+  /* overflow: hidden */
+}
+
+.modal-dialog-scrollable .modal-footer,
+.modal-dialog-scrollable .modal-header {
+  flex-shrink: 0
+}
+
+.modal-dialog-scrollable .modal-body {
+  overflow-y: auto
+}
+
+.modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  /* min-height: calc(100% - 1rem) */
+}
+
+.modal-dialog-centered::before {
+  display: block;
+  height: calc(100vh - 1rem);
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
+  content: ""
+}
+
+.modal-dialog-centered.modal-dialog-scrollable {
+  flex-direction: column;
+  justify-content: center;
+  height: 100%
+}
+
+.modal-dialog-centered.modal-dialog-scrollable .modal-content {
+  max-height: none
+}
+
+.modal-dialog-centered.modal-dialog-scrollable::before {
+  content: none
+}
+
+.modal-content {
+  position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: .3rem;
+  outline: 0
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000
+}
+
+.modal-backdrop.fade {
+  opacity: 0
+}
+
+.modal-backdrop.show {
+  opacity: .5
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #e3e6f0;
+  border-top-left-radius: calc(.3rem - 1px);
+  border-top-right-radius: calc(.3rem - 1px)
+}
+
+.modal-header .close {
+  padding: 1rem 1rem;
+  margin: -1rem -1rem -1rem auto
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1rem
+}
+
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: flex-end;
+  padding: .75rem;
+  border-top: 1px solid #e3e6f0;
+  border-bottom-right-radius: calc(.3rem - 1px);
+  border-bottom-left-radius: calc(.3rem - 1px)
 }
 
-.App-link {
-  color: #61dafb;
+.modal-footer>* {
+  margin: .25rem
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll
+}
+
+@media (min-width:376px) {
+  .modal-dialog {
+      max-width: 500px;
+      margin: 1.75rem auto
   }
-  to {
-    transform: rotate(360deg);
+
+  .modal-dialog-scrollable {
+      max-height: calc(100% - 3.5rem)
+  }
+
+  .modal-dialog-scrollable .modal-content {
+      max-height: calc(100vh - 3.5rem)
+  }
+
+  .modal-dialog-centered {
+      min-height: calc(100% - 3.5rem)
+  }
+
+  .modal-dialog-centered::before {
+      height: calc(100vh - 3.5rem);
+      height: -webkit-min-content;
+      height: -moz-min-content;
+      height: min-content
+  }
+
+  .modal-sm {
+      max-width: 300px
+  }
+  .popupcard {
+      right: 26px;
+  }
+}
+
+@media (min-width:992px) {
+
+  .modal-lg,
+  .modal-xl {
+      max-width: 800px
+  }
+  .modal {
+      right: 77px;
+  }
+  .popupcard {
+      right: 77px;
+  }
+  .popupcard1 {
+      right: 45px!important;
+  }
+}
+
+@media (min-width:1200px) {
+  .modal-xl {
+      max-width: 1140px
+  }
+
+  .popupcard {
+      right: 77px;
+  }
+  .popupcard1 {
+      right: 45px;
   }
 }
