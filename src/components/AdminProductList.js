@@ -7,6 +7,8 @@ import AdminEditProduct from './AdminEditProduct';
 const ProductList = () => {
   const [allProducts, setProducts] = useState([]);
   const navigate = useNavigate();
+  const loggedinAdmin = sessionStorage.getItem("loggedinAdmin");
+
   const getData = async () => {
     const result = await axios.get(`${process.env.REACT_APP_BACKENDURL}/get-files`);
     console.log(result.data.data)
@@ -22,12 +24,13 @@ const ProductList = () => {
 
   return (
     <div className="row">
+      {loggedinAdmin ? ( <div>
       {allProducts?.map((product) => (
         <div key={product._id} className="col-md-4 mb-4">
           <div className="card " style={{ width: 'fit-content' }}>
             <Link to={`/products/${product.id}`} className="card-link">
               <img
-                src={`${process.env.REACT_APP_BACKENDURL}/files/${product.fileName}`}
+                src={product.fileName}
                 alt={product.name}
                 className=""
                 height={'300px'}
@@ -44,7 +47,7 @@ const ProductList = () => {
 
           </div>
         </div>
-      ))}
+      ))}</div>):(<h4>Login as Admin </h4>)}
     </div>
   );
 };

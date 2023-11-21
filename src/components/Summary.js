@@ -78,7 +78,7 @@ const Summary = ({ cartItems, setCartItems, checkoutDetails }) => {
               {cartItems.map((item) => (
                 <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center">
                   <div className="d-flex">
-                    <img src={`${process.env.REACT_APP_BACKENDURL}/files/${item.fileName}`} alt={item.name} className="mr-3" style={{ maxWidth: '50px' }} />
+                    <img src={item.fileName} alt={item.name} className="mr-3" style={{ maxWidth: '50px' }} />
                     <div>
                       {item.name} -  ₹{item.price} each
                     </div>

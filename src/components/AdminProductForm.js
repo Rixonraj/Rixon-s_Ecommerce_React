@@ -56,7 +56,7 @@ function ProductForm() {
       if (values.price === 0) {
         error.price = "Please enter valid Item Cost"
       }
-      if (imageFile === "") {
+      if (avatarPreview === "") {
         error.file = "Please select Image"
       }
       if (values.dateCreated === "") {
@@ -71,23 +71,24 @@ function ProductForm() {
     onSubmit: async (values) => {
       try {
         console.log("values", values)
+        console.log("avatarPreview",avatarPreview)
         setSpinner(true);
         const formData = {
           name: values.name,
           price: values.price,
           availability: values.availability,
           category: values.category,
-          file: imageFile,
+          file: avatarPreview,
           location: values.location,
           quantity: values.quantity,
           dateCreated: values.dateCreated
         }
 
         const result = await axios.post(
-          `${process.env.REACT_APP_BACKENDURL}/upload-files`,
+          `${process.env.REACT_APP_BACKENDURL}/uploadProduct`,
           formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'application/json',
             'Authorization': token,
             'User-Id': userId,
           }
@@ -96,6 +97,7 @@ function ProductForm() {
         console.log(result);
         if (result.data.status == "ok") {
           // setPage("success")
+          alert("Created")
           createItemFormik.resetForm();
           resetimage();
           setSpinner(false);

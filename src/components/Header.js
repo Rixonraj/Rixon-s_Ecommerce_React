@@ -45,7 +45,7 @@ const Header = ({ cartItems, user, isLoggedin, setisLoggedin }) => {
     navigate('/adminlogin')
   }
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className='navBarZ'>
 
       <Navbar.Brand as={Link} to="/admindashboard" onClick={handleAdminClick} >
        <span className={`${isAdminpage ? "selectedProfile ms-3" :"ms-3"}`}>  Admin  </span> 

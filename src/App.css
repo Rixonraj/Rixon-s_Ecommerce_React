@@ -26,9 +26,9 @@
 }
 
 .contentjombo{
-  position: relative;
-  top: 100px;
-  left: 20px;
+  position: absolute;
+  bottom: 110px;
+  left: 27px;
   /* z-index: 1; */
   opacity: 100% !important;
   color: #000000;
@@ -36,7 +36,9 @@
   text-align: center;
 }
 /* //Modal */
-
+.navBarZ{
+  z-index: 322;
+}
 .popupcard {
 
   background: white;

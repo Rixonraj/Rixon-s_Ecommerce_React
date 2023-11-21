@@ -15,7 +15,7 @@ function AdminEditProduct(props) {
     const [closePopup, setclosePopup] = useState();
     const [imageChanged, setImageChanged] = useState(false);
     const navigate = useNavigate()
-    const [avatarPreview, setAvatarPreview] = useState(`${process.env.REACT_APP_BACKENDURL}/files/${props.item.fileName}`);
+    const [avatarPreview, setAvatarPreview] = useState(props.item.fileName);
     const [page, setPage] = useState("editPage");
     const [displayMessage, setDisplayMessage] = useState("")
     const [spinner, setSpinner] = useState(false);
