@@ -34,7 +34,7 @@ const ProductDetails = ({ addToCart, updateQuantity, productQuantities, cartItem
                     <div className='col-xl-4 col-sm-12'>
                         <h4>{productDetails.name}</h4>
                         <img
-                            src={`${process.env.REACT_APP_BACKENDURL}/files/${productDetails.fileName}`}
+                            src={productDetails.fileName}
                             alt={productDetails.name}
                             className=""
                             height={'500px'}

@@ -1,3 +1,11 @@
+.navbar.active {
+  position: sticky !important;
+  top: 0;
+  /* background: linear-gradient(0.25turn, #000000, #bd0000, #000000); */
+  z-index: 5;
+  /* color: white !important; */
+}
+
 .selectedProfile{
   color: #1192a5;
   font-weight: bolder;

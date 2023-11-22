@@ -53,7 +53,7 @@ const Cart = ({ cartItems, removeFromCart, updateQuantity }) => {
                   </button>
                 </div>
                 <div>
-                  Total: ${item.total.toFixed(2)}
+                  Total: ₹{item.total.toFixed(2)}
                 </div>
               </li>
             ))}

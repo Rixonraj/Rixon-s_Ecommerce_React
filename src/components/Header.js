@@ -10,15 +10,22 @@ const Header = ({ cartItems, user, isLoggedin, setisLoggedin }) => {
   const [cartItemCount, setCartItemCount] = useState(0);
   const location = useLocation().pathname;
   const userId = sessionStorage.getItem("userid")
-  console.log(sessionStorage.getItem("session"))
   const [isAdminpage, setisAdminpage] = useState(((location.split("/")[1] === 'admindashboard' || location.split("/")[1] === 'adminlogin' || location.split("/")[1] === 'adminsignup' || location.split("/")[1] === 'adminforgot-password') ? true : false));
+  // sticky nav
+  const [stickyClass, setStickyClass] = useState("");
 
+  function stickNavbar() {
+    let windowHeight = window.scrollY;
+    console.log("windowHeight",windowHeight);
+    setStickyClass("active")
+  }
+  useEffect(() => {
+    window.addEventListener("scroll", stickNavbar);
+  })
   useEffect(() => {
     // Update cart item count whenever cartItems changes
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     setCartItemCount(totalItems);
-    console.log("isAdminpage:", isAdminpage)
-    console.log("isLoggedin:", isLoggedin)
   }, [cartItems]);
 
   const handleAdminClick = () => {
@@ -29,30 +36,30 @@ const Header = ({ cartItems, user, isLoggedin, setisLoggedin }) => {
     setisAdminpage(false);
 
   };
-  const handleLogout = () =>{
+  const handleLogout = () => {
     sessionStorage.removeItem('session')
     sessionStorage.removeItem('userid')
     sessionStorage.removeItem('loggedinAdmin')
-    
+
     setisLoggedin(false)
   }
-  const handleLogin = () =>{
+  const handleLogin = () => {
     handleLogout()
     navigate('/login')
   }
-  const handleAdminLogin = () =>{
+  const handleAdminLogin = () => {
     handleLogout()
     navigate('/adminlogin')
   }
   return (
-    <Navbar bg="light" expand="lg" className='navBarZ'>
+    <Navbar bg="light" expand="lg" className={`navBarZ ${stickyClass}`}>
 
       <Navbar.Brand as={Link} to="/admindashboard" onClick={handleAdminClick} >
-       <span className={`${isAdminpage ? "selectedProfile ms-3" :"ms-3"}`}>  Admin  </span> 
+        <span className={`${isAdminpage ? "selectedProfile ms-3" : "ms-3"}`}>  Admin  </span>
       </Navbar.Brand>
       |
       <Navbar.Brand as={Link} to="/" onClick={handleUserClick}>
-      <span className={`${isAdminpage ? "ms-3" :"ms-3 selectedProfile"}`}>  User  </span> 
+        <span className={`${isAdminpage ? "ms-3" : "ms-3 selectedProfile"}`}>  User  </span>
       </Navbar.Brand>
 
       <Navbar.Toggle aria-controls="navbarNav" />
@@ -68,7 +75,7 @@ const Header = ({ cartItems, user, isLoggedin, setisLoggedin }) => {
             Create Product
           </Nav.Link>
           {isLoggedin ? <Nav.Link as={Link} to="/admindashboard">
-          <button className="btn btn-danger" onClick={() => { handleLogout() }}> Logout </button>
+            <button className="btn btn-danger" onClick={() => { handleLogout() }}> Logout </button>
           </Nav.Link> :
             <button className="btn btn-info" onClick={() => { handleAdminLogin() }}> Admin Login </button>
           }
@@ -87,9 +94,9 @@ const Header = ({ cartItems, user, isLoggedin, setisLoggedin }) => {
           </Nav.Link>
           <CartIcon cartItemCount={cartItemCount} />
           {isLoggedin ? <Nav.Link as={Link} to="/">
-          <button className="btn btn-danger" onClick={() => { handleLogout() }}> Logout </button>
+            <button className="btn btn-danger" onClick={() => { handleLogout() }}> Logout </button>
           </Nav.Link> :
-             <button className="btn btn-info" onClick={() => { handleLogin() }}> User Login </button>
+            <button className="btn btn-info" onClick={() => { handleLogin() }}> User Login </button>
           }
         </Nav>}
       </Navbar.Collapse>

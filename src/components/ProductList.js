@@ -269,8 +269,8 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
             {/* Product listing */}
             <div className="row">
                 {currentProducts?.map((product) => (
-                    <div key={product._id} className="col-md-4 mb-4">
-                        <div className="card " key={`card-${product._id}`} style={{ width: 'fit-content' }}>
+                    <div key={product._id} className="col-md-4 col-sm-12 mb-4">
+                        <div className="card  ms-auto me-auto" key={`card-${product._id}`} style={{ width: 'fit-content' }}>
                             <Link to={`/productDetail`} key={`link-${product._id}`} onClick={() => setproductDetails(product)} className="card-link">
                                 <img
                                     src={product.fileName}
