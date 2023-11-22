@@ -16,7 +16,6 @@ const Header = ({ cartItems, user, isLoggedin, setisLoggedin }) => {
 
   function stickNavbar() {
     let windowHeight = window.scrollY;
-    console.log("windowHeight",windowHeight);
     setStickyClass("active")
   }
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 import './ProductList.css';
@@ -21,7 +21,7 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
     const [priceRange, setPriceRange] = useState([0, 100000]); // Default price range
     const [allCategories, setallCategories] = useState([]); // Add more locations as needed
     // var allCategories = [];
-    const [categoryFilter, setCategoryFilter] = useState(''); // Default no Category filter
+    const categoryFilter = useRef([]); // Default no Category filter
     const getData = async () => {
         const result = await axios.get(`${process.env.REACT_APP_BACKENDURL}/get-files`);
         console.log(result.data.data)
@@ -34,7 +34,7 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
         const uniqueSet1 = new Set(result.data.data.map(({ category }) => category));
         const uniqueArray1 = [...uniqueSet1];
         setallCategories(uniqueArray1);
-        await handlesortfilters(result.data.data, sortType, locationFilter, priceRange, categoryFilter, currentPage)
+        await handlesortfilters(result.data.data, sortType, locationFilter, priceRange, categoryFilter.current, currentPage)
         console.log("currentProducts", currentProducts)
     }
     useEffect(() => {
@@ -95,6 +95,7 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
     const handlesortfilters = async (allProducts, sortType, locationFilter, priceRange, categoryFilter, currentPage) => {
         console.log("allProducts", allProducts)
         console.log("locationFilter:", locationFilter)
+        console.log("categoryFilter sort:", categoryFilter)
         // Sort the entire product list based on the selected sorting option
         const sortedProducts = [...allProducts].sort((a, b) => {
             if (sortType === 'name') {
@@ -115,7 +116,7 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
             .filter((product) => !categoryFilter.length || categoryFilter.includes(product.category))
             .filter((product) => product.price >= priceRange[0] && product.price <= priceRange[1]);
 
-
+        console.log("filteredProducts",filteredProducts)
         const indexOfLastItem = currentPage * itemsPerPage;
         const indexOfFirstItem = indexOfLastItem - itemsPerPage;
         setCurrentProducts(filteredProducts.slice(indexOfFirstItem, indexOfLastItem));
@@ -124,34 +125,33 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
     }
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-        handlesortfilters(allProducts, sortType, locationFilter, priceRange, categoryFilter, pageNumber)
+        handlesortfilters(allProducts, sortType, locationFilter, priceRange, categoryFilter.current, pageNumber)
     };
 
     const handleSortChange = (type) => {
         setSortType(type);
         setCurrentPage(1);// Reset to the first page when changing the sorting option
-        handlesortfilters(allProducts, type, locationFilter, priceRange, categoryFilter, currentPage)
+        handlesortfilters(allProducts, type, locationFilter, priceRange, categoryFilter.current, currentPage)
 
     };
 
     const handleLocationFilterChange = (location) => {
         setLocationFilter(location);
         setCurrentPage(1);
-        handlesortfilters(allProducts, sortType, location, priceRange, categoryFilter, currentPage)
+        handlesortfilters(allProducts, sortType, location, priceRange, categoryFilter.current, currentPage)
     };
 
     const handleCategoryFilterChange = (category, cat) => {
-        console.log("category", category, cat)
-        setCategoryFilter((prevFilter) =>
-            prevFilter.includes(category) ? prevFilter.filter((item) => item !== category) : [...prevFilter, category]
-        );
+        console.log("category", category, cat);
+        console.log("categoryFilter", categoryFilter)
+        categoryFilter.current = (categoryFilter.current.includes(category) ? categoryFilter.current.filter((item) => item !== category) : [...categoryFilter.current, category])
         setCurrentPage(1);
-        handlesortfilters(allProducts, sortType, locationFilter, priceRange, cat ? "" : category, currentPage)
+        handlesortfilters(allProducts, sortType, locationFilter, priceRange, categoryFilter.current, currentPage)
     };
 
     const handlePriceRangeChange = (priceRange) => {
         setPriceRange(priceRange);
-        handlesortfilters(allProducts, sortType, locationFilter, priceRange, categoryFilter, currentPage)
+        handlesortfilters(allProducts, sortType, locationFilter, priceRange, categoryFilter.current, currentPage)
 
     };
 
@@ -225,8 +225,8 @@ const ProductList = ({ addToCart, updateQuantity, productQuantities, cartItems, 
                                     type="checkbox"
                                     id={`location-${category}`}
                                     className="form-check-input"
-                                    checked={categoryFilter.includes(category)}
-                                    onChange={() => handleCategoryFilterChange(category, categoryFilter.includes(category))}
+                                    checked={categoryFilter.current.includes(category)}
+                                    onChange={() => handleCategoryFilterChange(category, categoryFilter.current.includes(category))}
                                 />
                                 <label htmlFor={`category-${category}`} className="form-check-label">
                                     {category}
